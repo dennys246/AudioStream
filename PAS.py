@@ -3,13 +3,31 @@ import pyaudio
 import wave
 
 class AudioStream:
-	def __init__(self):
-		self.chunk = 1024 # Declare blocks of data to collect
-		self.format = pyaudio.paInt16 # Declare format
-		self.channels = 2 # Declare number of channels
-		self.rate = 48000 # Declare sample per second
-		self.record_seconds = 20 # Declare how many seconds to record
-		self.output_filename = "output.wav" # Declare output filename
+	def __init__(self, chunk = None, format = None, channels = None, rate = None, record_seconds = None, output_filename = None):
+		if chunk == None:
+			self.chunk = 1024 # Declare blocks of data to collect
+		else:
+			self.chunk = chunk
+		if format == None:
+			self.format = pyaudio.paInt16 # Declare format
+		else:
+			self.format = format
+		if channels == None:
+			self.channels = 1 # Declare number of channels
+		else:
+			self.channels = channels
+		if rate == None:
+			self.rate = 48000 # Declare sample per second
+		else:
+			self.rate = rate
+		if record_seconds == None:
+			self.record_seconds = 20 # Declare how many seconds to record
+		else:
+			self.record_records = record_seconds
+		if output_filename == None:
+			self.output_filename = "output.wav" # Declare output filename
+		else:
+			self.output_filename = output_filename
 
 	def record(self):
 		print("PyAudio recording '" + self.output_filename + "' started - "  + self.time())
@@ -23,7 +41,6 @@ class AudioStream:
 				                input=True,
 								output=True,
 				                frames_per_buffer=self.chunk,
-								blocking = False,
 								input_device_index=2) # Start audio stream of computer and audio
 
 				self.frames = [] # Declare frame hold
